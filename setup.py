@@ -4,6 +4,7 @@ from distutils.core import setup,Extension,os
 import string
 import os
 import sys
+import shlex
 
 def read_file(filename):
     filepath = os.path.join(
@@ -13,18 +14,12 @@ def read_file(filename):
     else:
         return ''
 
-if sys.version > '3':
-    def cmd1(strings):
-        return os.popen(strings).readlines()[0][:-1]
+def cmd1(strings):
+    return os.popen(strings).readlines()[0][:-1]
 
-    def cmd2(strings):
-        return cmd1(strings).split()
-else:
-    def cmd1(strings):
-        return os.popen(strings).readlines()[0][:-1]
+def cmd2(strings):
+    return shlex.split(cmd1(strings))
 
-    def cmd2(strings):
-        return string.split(cmd1(strings))
 
 setup(name = "mecab-python3",
     version = '0.6',
